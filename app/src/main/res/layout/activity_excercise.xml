@@ -26,7 +26,7 @@
         android:textColor="@color/green"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/flProgressBar"
+        app:layout_constraintBottom_toTopOf="@+id/flProgressBar"
         />
     <FrameLayout
         android:id="@+id/flProgressBar"
@@ -45,9 +45,30 @@
             android:id="@+id/progressBar"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_gravity="center"
+            android:background="@drawable/circular_progress_gray"
+            android:progressDrawable="@drawable/circular_progress_bar"
+            android:indeterminate="false"
             android:max="10"
             android:progress="100"
             android:rotation="-90"/>
+
+        <LinearLayout
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:background="@drawable/item_circular_color_accent_bg">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvTimer"
+                android:textColor="@color/white"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                tools:text="10"
+                />
+
+        </LinearLayout>
 
     </FrameLayout>
 
