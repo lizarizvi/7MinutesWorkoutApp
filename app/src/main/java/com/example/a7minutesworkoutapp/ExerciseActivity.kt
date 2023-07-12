@@ -55,7 +55,7 @@ class ExerciseActivity : AppCompatActivity() {
             }
 
             override fun onFinish() {
-                Toast.makeText(this@ExerciseActivity, "Let's start the exercise", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@ExerciseActivity, "Next Exercise", Toast.LENGTH_SHORT).show()
                 //exerciseView()
                 currentExercisePosition++
                 binding?.flProgressBar?.visibility = View.INVISIBLE
@@ -63,6 +63,8 @@ class ExerciseActivity : AppCompatActivity() {
                 binding?.tvExercise?.visibility = View.VISIBLE
                 binding?.flExercise?.visibility = View.VISIBLE
                 binding?.gifImageView?.visibility = View.VISIBLE
+                binding?.tvUpcomingExercise?.visibility = View.INVISIBLE
+                binding?.upcomingExercise?.visibility = View.INVISIBLE
                 if (exerciseTimer!=null){
                     exerciseTimer?.cancel()
                     exerciseProgress = 0
@@ -87,7 +89,7 @@ class ExerciseActivity : AppCompatActivity() {
             }
 
             override fun onFinish() {
-                //Toast.makeText(this@ExerciseActivity, "30 sec of exercise over🥳", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this@ExerciseActivity, "30 sec of exercise over", Toast.LENGTH_SHORT).show()
                 if(currentExercisePosition < exerciseList?.size!!-1){
 
                     binding?.flProgressBar?.visibility = View.VISIBLE
@@ -95,10 +97,13 @@ class ExerciseActivity : AppCompatActivity() {
                     binding?.tvExercise?.visibility = View.INVISIBLE
                     binding?.flExercise?.visibility = View.INVISIBLE
                     binding?.gifImageView?.visibility = View.INVISIBLE
+                    binding?.upcomingExercise?.visibility = View.VISIBLE
+                    binding?.tvUpcomingExercise?.visibility  = View.VISIBLE
                     if (restTimer!=null){
                         restTimer?.cancel()
                         restProgress = 0
                     }
+                    binding?.tvUpcomingExercise?.text = exerciseList!![currentExercisePosition + 1].getName()
                     startTimer()
                 }else{
                     Toast.makeText(this@ExerciseActivity, "Exercise over🥳", Toast.LENGTH_SHORT).show()
