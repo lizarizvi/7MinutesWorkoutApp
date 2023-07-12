@@ -34,12 +34,12 @@ class ExerciseActivity : AppCompatActivity() {
         startTimer()
     }
 
-    private fun exerciseView(){
-        binding?.flProgressBar?.visibility = View.INVISIBLE
-        binding?.tvTitle?.text = "Arm Circles Exercise"
-        binding?.flExercise?.visibility = View.VISIBLE
-        exerciseTimer()
-    }
+//    private fun exerciseView(){
+//        binding?.flProgressBar?.visibility = View.INVISIBLE
+//        binding?.tvTitle?.text = "Arm Circles Exercise"
+//        binding?.flExercise?.visibility = View.VISIBLE
+//        exerciseTimer()
+//    }
 
     private fun startTimer() {
         //start the timer
@@ -52,7 +52,11 @@ class ExerciseActivity : AppCompatActivity() {
 
             override fun onFinish() {
                 Toast.makeText(this@ExerciseActivity, "Let's start the exercise", Toast.LENGTH_SHORT).show()
-                exerciseView()
+                //exerciseView()
+                binding?.flProgressBar?.visibility = View.INVISIBLE
+                binding?.tvTitle?.text = "Arm Circles Exercise"
+                binding?.flExercise?.visibility = View.VISIBLE
+                exerciseTimer()
             }
         }.start()
     }
