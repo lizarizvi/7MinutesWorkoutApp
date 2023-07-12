@@ -47,7 +47,7 @@ class ExerciseActivity : AppCompatActivity() {
     private fun startTimer() {
         //start the timer
         binding?.progressBar?.progress = restProgress.toInt()
-        restTimer = object : CountDownTimer(10000, 1000) { //for testing millisInFuture=1000
+        restTimer = object : CountDownTimer(1000, 1000) { //for testing millisInFuture=1000
             override fun onTick(p0: Long) {
                 restProgress++
                 binding?.progressBar?.progress = (10 - restProgress).toInt()
@@ -79,7 +79,7 @@ class ExerciseActivity : AppCompatActivity() {
     private fun exerciseTimer() {
         //start the timer
         binding?.exerciseProgressBar?.progress = exerciseProgress.toInt()
-        exerciseTimer = object : CountDownTimer(30000, 1000) { //for testing millisInFuture=3000
+        exerciseTimer = object : CountDownTimer(3000, 1000) { //for testing millisInFuture=3000
             override fun onTick(p0: Long) {
                 exerciseProgress++
                 binding?.exerciseProgressBar?.progress = (30 - exerciseProgress).toInt()
