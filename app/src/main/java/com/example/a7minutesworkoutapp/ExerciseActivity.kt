@@ -10,9 +10,8 @@ class ExerciseActivity : AppCompatActivity() {
 
     private var binding : ActivityExcerciseBinding? = null
 
-    private var countDownTimer: CountDownTimer? = null
-    private var timeDuration: Long = 20000 //in ms
-    private var pauseOffset: Long = 0 //pauseOffset=timeDuration-timeLeft
+    private var restTimer: CountDownTimer? = null
+    private var restProgress: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,8 +20,6 @@ class ExerciseActivity : AppCompatActivity() {
         setContentView(binding?.root)
         setSupportActionBar(binding?.toolbarExercise)
 
-        binding?.tvTimer?.text = "${(timeDuration / 1000).toString()}"
-
         if(supportActionBar!=null){
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
         }
@@ -30,22 +27,32 @@ class ExerciseActivity : AppCompatActivity() {
             onBackPressed()
 
         }
-        binding?.tvTimer?.setOnClickListener {
-            startTimer(pauseOffset)
-        }
+        startTimer()
     }
 
-    private fun startTimer(pauseOffsetL: Long) {
-        //start the timer for 60 sec
-        countDownTimer = object : CountDownTimer(timeDuration - pauseOffsetL, 1000) {
-            override fun onTick(millisUntilFinished: Long) {
-                pauseOffset = timeDuration - millisUntilFinished
-                binding?.tvTimer?.text = (millisUntilFinished / 1000).toString() //current timer value
+    private fun startTimer() {
+        //start the timer
+        restTimer = object : CountDownTimer(10000, 1000) {
+            override fun onTick(p0: Long) {
+                restProgress++
+                binding?.progressBar?.progress = (10 - restProgress).toInt()
+                binding?.tvTimer?.text = (10-restProgress).toString() //current timer value
             }
 
             override fun onFinish() {
-                Toast.makeText(this@ExerciseActivity, "timer finished!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@ExerciseActivity, "Let's start the exercise", Toast.LENGTH_SHORT).show()
             }
         }.start()
+    }
+
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (restTimer!=null){
+            restTimer?.cancel()
+            restProgress = 0
+        }
+        binding=null
     }
 }
