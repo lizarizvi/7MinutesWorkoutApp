@@ -17,6 +17,9 @@ class ExerciseActivity : AppCompatActivity() {
     private var exerciseTimer: CountDownTimer? = null
     private var exerciseProgress: Long = 0
 
+    private var exerciseList : ArrayList<ExerciseModel>? = null
+    private var currentExercisePosition = -1
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -29,8 +32,8 @@ class ExerciseActivity : AppCompatActivity() {
         }
         binding?.toolbarExercise?.setNavigationOnClickListener {
             onBackPressed()
-
         }
+        exerciseList = Constants.defaultExerciseList()
         startTimer()
     }
 
@@ -43,7 +46,8 @@ class ExerciseActivity : AppCompatActivity() {
 
     private fun startTimer() {
         //start the timer
-        restTimer = object : CountDownTimer(10000, 1000) {
+        binding?.progressBar?.progress = restProgress.toInt()
+        restTimer = object : CountDownTimer(10000, 1000) { //for testing millisInFuture=1000
             override fun onTick(p0: Long) {
                 restProgress++
                 binding?.progressBar?.progress = (10 - restProgress).toInt()
@@ -53,9 +57,20 @@ class ExerciseActivity : AppCompatActivity() {
             override fun onFinish() {
                 Toast.makeText(this@ExerciseActivity, "Let's start the exercise", Toast.LENGTH_SHORT).show()
                 //exerciseView()
+                currentExercisePosition++
                 binding?.flProgressBar?.visibility = View.INVISIBLE
-                binding?.tvTitle?.text = "Arm Circles Exercise"
+                binding?.tvTitle?.visibility = View.INVISIBLE
+                binding?.tvExercise?.visibility = View.VISIBLE
                 binding?.flExercise?.visibility = View.VISIBLE
+                binding?.gifImageView?.visibility = View.VISIBLE
+                if (exerciseTimer!=null){
+                    exerciseTimer?.cancel()
+                    exerciseProgress = 0
+                }
+
+                binding?.gifImageView?.setImageResource(exerciseList!![currentExercisePosition].getImage())
+                binding?.tvExercise?.text = exerciseList!![currentExercisePosition].getName()
+
                 exerciseTimer()
             }
         }.start()
@@ -63,7 +78,8 @@ class ExerciseActivity : AppCompatActivity() {
 
     private fun exerciseTimer() {
         //start the timer
-        exerciseTimer = object : CountDownTimer(30000, 1000) {
+        binding?.exerciseProgressBar?.progress = exerciseProgress.toInt()
+        exerciseTimer = object : CountDownTimer(30000, 1000) { //for testing millisInFuture=3000
             override fun onTick(p0: Long) {
                 exerciseProgress++
                 binding?.exerciseProgressBar?.progress = (30 - exerciseProgress).toInt()
@@ -71,7 +87,22 @@ class ExerciseActivity : AppCompatActivity() {
             }
 
             override fun onFinish() {
-                Toast.makeText(this@ExerciseActivity, "30 sec of exercise over🥳", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this@ExerciseActivity, "30 sec of exercise over🥳", Toast.LENGTH_SHORT).show()
+                if(currentExercisePosition < exerciseList?.size!!-1){
+
+                    binding?.flProgressBar?.visibility = View.VISIBLE
+                    binding?.tvTitle?.visibility = View.VISIBLE
+                    binding?.tvExercise?.visibility = View.INVISIBLE
+                    binding?.flExercise?.visibility = View.INVISIBLE
+                    binding?.gifImageView?.visibility = View.INVISIBLE
+                    if (restTimer!=null){
+                        restTimer?.cancel()
+                        restProgress = 0
+                    }
+                    startTimer()
+                }else{
+                    Toast.makeText(this@ExerciseActivity, "Exercise over🥳", Toast.LENGTH_SHORT).show()
+                }
             }
         }.start()
     }
