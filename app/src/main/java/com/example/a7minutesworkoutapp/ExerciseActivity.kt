@@ -3,11 +3,15 @@ package com.example.a7minutesworkoutapp
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.speech.tts.TextToSpeech
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.example.a7minutesworkoutapp.databinding.ActivityExcerciseBinding
+import java.util.*
+import kotlin.collections.ArrayList
 
-class ExerciseActivity : AppCompatActivity() {
+class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     private var binding : ActivityExcerciseBinding? = null
 
@@ -20,12 +24,16 @@ class ExerciseActivity : AppCompatActivity() {
     private var exerciseList : ArrayList<ExerciseModel>? = null
     private var currentExercisePosition = -1
 
+    private var  tts : TextToSpeech? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityExcerciseBinding.inflate(layoutInflater)
         setContentView(binding?.root)
         setSupportActionBar(binding?.toolbarExercise)
+
+        tts = TextToSpeech(this,this)
 
         if(supportActionBar!=null){
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -47,7 +55,7 @@ class ExerciseActivity : AppCompatActivity() {
     private fun startTimer() {
         //start the timer
         binding?.progressBar?.progress = restProgress.toInt()
-        restTimer = object : CountDownTimer(1000, 1000) { //for testing millisInFuture=1000
+        restTimer = object : CountDownTimer(3000, 1000) { //millisInFuture=10000
             override fun onTick(p0: Long) {
                 restProgress++
                 binding?.progressBar?.progress = (10 - restProgress).toInt()
@@ -55,7 +63,7 @@ class ExerciseActivity : AppCompatActivity() {
             }
 
             override fun onFinish() {
-                Toast.makeText(this@ExerciseActivity, "Next Exercise", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@ExerciseActivity, "Let's exercise...", Toast.LENGTH_SHORT).show()
                 //exerciseView()
                 currentExercisePosition++
                 binding?.flProgressBar?.visibility = View.INVISIBLE
@@ -73,6 +81,8 @@ class ExerciseActivity : AppCompatActivity() {
                 binding?.gifImageView?.setImageResource(exerciseList!![currentExercisePosition].getImage())
                 binding?.tvExercise?.text = exerciseList!![currentExercisePosition].getName()
 
+                speakOut(exerciseList!![currentExercisePosition].getName())
+
                 exerciseTimer()
             }
         }.start()
@@ -81,7 +91,7 @@ class ExerciseActivity : AppCompatActivity() {
     private fun exerciseTimer() {
         //start the timer
         binding?.exerciseProgressBar?.progress = exerciseProgress.toInt()
-        exerciseTimer = object : CountDownTimer(3000, 1000) { //for testing millisInFuture=3000
+        exerciseTimer = object : CountDownTimer(3000, 1000) { //millisInFuture=30000
             override fun onTick(p0: Long) {
                 exerciseProgress++
                 binding?.exerciseProgressBar?.progress = (30 - exerciseProgress).toInt()
@@ -104,9 +114,14 @@ class ExerciseActivity : AppCompatActivity() {
                         restProgress = 0
                     }
                     binding?.tvUpcomingExercise?.text = exerciseList!![currentExercisePosition + 1].getName()
+
+                    Toast.makeText(this@ExerciseActivity,"Relax...",Toast.LENGTH_SHORT).show()
+                    speakOut("relax")
+
                     startTimer()
                 }else{
                     Toast.makeText(this@ExerciseActivity, "Exercise over🥳", Toast.LENGTH_SHORT).show()
+                    speakOut("Exercise over")
                 }
             }
         }.start()
@@ -122,6 +137,27 @@ class ExerciseActivity : AppCompatActivity() {
             exerciseTimer?.cancel()
             exerciseProgress = 0
         }
+
+        if(tts!=null){
+            tts?.stop()
+            tts?.shutdown()
+        }
+
         binding=null
+    }
+
+    private fun speakOut(text : String){
+        tts?.speak(text, TextToSpeech.QUEUE_FLUSH,null,"")
+    }
+
+    override fun onInit(status: Int) {
+        if (status == TextToSpeech.SUCCESS){
+            val result = tts!!.setLanguage(Locale.ENGLISH)
+        }
+        if (status == TextToSpeech.LANG_MISSING_DATA || status == TextToSpeech.LANG_NOT_SUPPORTED){
+            Log.e("TTS","Language not supported")
+        }else{
+            Log.e("TTS","Initialization failed")
+        }
     }
 }
