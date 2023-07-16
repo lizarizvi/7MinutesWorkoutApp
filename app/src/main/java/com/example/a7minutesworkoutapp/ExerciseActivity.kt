@@ -109,14 +109,6 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                 exerciseProgress++
                 binding?.exerciseProgressBar?.progress = (30 - exerciseProgress).toInt()
                 binding?.tvExerciseTimer?.text = (30-exerciseProgress).toString() //current timer value
-            }
-
-            override fun onFinish() {
-                //Toast.makeText(this@ExerciseActivity, "30 sec of exercise over", Toast.LENGTH_SHORT).show()
-
-                exerciseList!![currentExercisePosition].setIsSelected(false)
-                exerciseList!![currentExercisePosition].setIsCompleted(true)
-                exerciseAdapter?.notifyDataSetChanged()
 
                 try {
                     val soundURI = Uri.parse("android.resource://com.example.a7minutesworkoutapp/"
@@ -127,6 +119,25 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                 }catch (e : Exception){
                     e.printStackTrace()
                 }
+
+            }
+
+            override fun onFinish() {
+                //Toast.makeText(this@ExerciseActivity, "30 sec of exercise over", Toast.LENGTH_SHORT).show()
+
+                exerciseList!![currentExercisePosition].setIsSelected(false)
+                exerciseList!![currentExercisePosition].setIsCompleted(true)
+                exerciseAdapter?.notifyDataSetChanged()
+
+//                try {
+//                    val soundURI = Uri.parse("android.resource://com.example.a7minutesworkoutapp/"
+//                            + R.raw.music)
+//                    player = MediaPlayer.create(applicationContext,soundURI)
+//                    player?.isLooping = false
+//                    player?.start()
+//                }catch (e : Exception){
+//                    e.printStackTrace()
+//                }
 
                 if(currentExercisePosition < exerciseList?.size!!-1){
                     binding?.flProgressBar?.visibility = View.VISIBLE
