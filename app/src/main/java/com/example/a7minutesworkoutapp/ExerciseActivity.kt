@@ -1,5 +1,6 @@
 package com.example.a7minutesworkoutapp
 
+import android.content.Intent
 import android.media.MediaPlayer
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -33,6 +34,9 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     private var exerciseAdapter: ExerciseStatusAdapter? = null
 
+    private var startTimerDuration: Long = 1
+    private var exerciseTimerDuration: Long = 1
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -64,7 +68,8 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private fun startTimer() {
         //start the timer
         binding?.progressBar?.progress = restProgress.toInt()
-        restTimer = object : CountDownTimer(3000, 1000) { //millisInFuture=10000
+        restTimer = object : CountDownTimer(startTimerDuration*3000, 1000)
+        { //millisInFuture=10000
             override fun onTick(p0: Long) {
                 restProgress++
                 binding?.progressBar?.progress = (10 - restProgress).toInt()
@@ -104,7 +109,8 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private fun exerciseTimer() {
         //start the timer
         binding?.exerciseProgressBar?.progress = exerciseProgress.toInt()
-        exerciseTimer = object : CountDownTimer(3000, 1000) { //millisInFuture=30000
+        exerciseTimer = object : CountDownTimer(exerciseTimerDuration*3000, 1000)
+        { //millisInFuture=30000
             override fun onTick(p0: Long) {
                 exerciseProgress++
                 binding?.exerciseProgressBar?.progress = (30 - exerciseProgress).toInt()
@@ -140,6 +146,11 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 //                }
 
                 if(currentExercisePosition < exerciseList?.size!!-1){
+
+                    exerciseList!![currentExercisePosition].setIsSelected(false)
+                    exerciseList!![currentExercisePosition].setIsCompleted(true)
+                    exerciseAdapter?.notifyDataSetChanged()
+
                     binding?.flProgressBar?.visibility = View.VISIBLE
                     binding?.tvTitle?.visibility = View.VISIBLE
                     binding?.tvExercise?.visibility = View.INVISIBLE
@@ -158,8 +169,12 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
                     startTimer()
                 }else{
-                    Toast.makeText(this@ExerciseActivity, "Exercise over🥳", Toast.LENGTH_SHORT).show()
-                    speakOut("Exercise over")
+                    Toast.makeText(this@ExerciseActivity, "Exercise over", Toast.LENGTH_SHORT).show()
+                    speakOut("Congratulations. You have completed the workout!")
+
+                    finish()
+                    val intent = Intent(this@ExerciseActivity, FinishActivity::class.java)
+                    startActivity(intent)
                 }
             }
         }.start()
