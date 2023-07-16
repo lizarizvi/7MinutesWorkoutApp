@@ -75,6 +75,10 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                 Toast.makeText(this@ExerciseActivity, "Let's exercise...", Toast.LENGTH_SHORT).show()
                 //exerciseView()
                 currentExercisePosition++
+
+                exerciseList!![currentExercisePosition].setIsSelected(true)
+                exerciseAdapter?.notifyDataSetChanged()
+
                 binding?.flProgressBar?.visibility = View.INVISIBLE
                 binding?.tvTitle?.visibility = View.INVISIBLE
                 binding?.tvExercise?.visibility = View.VISIBLE
@@ -109,6 +113,10 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
             override fun onFinish() {
                 //Toast.makeText(this@ExerciseActivity, "30 sec of exercise over", Toast.LENGTH_SHORT).show()
+
+                exerciseList!![currentExercisePosition].setIsSelected(false)
+                exerciseList!![currentExercisePosition].setIsCompleted(true)
+                exerciseAdapter?.notifyDataSetChanged()
 
                 try {
                     val soundURI = Uri.parse("android.resource://com.example.a7minutesworkoutapp/"
@@ -190,4 +198,5 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         exerciseAdapter = ExerciseStatusAdapter(exerciseList!!)
         binding?.rvExerciseStatus?.adapter = exerciseAdapter
     }
+
 }
