@@ -5,7 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".BMIActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -13,5 +12,103 @@
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
         android:background="@color/white"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_below="@+id/toolbarBMI"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tilWeight"
+        android:layout_margin="10dp"
+        app:boxStrokeColor="@color/green"
+        app:hintTextColor="@color/green"
+        style="@style/ThemeOverlay.Material3.TextInputEditText.OutlinedBox">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/etWeight"
+            android:hint="Weight(in kg)"
+            android:inputType="numberDecimal"
+            android:textSize="16sp"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_below="@+id/tilWeight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tilHeight"
+        android:layout_margin="10dp"
+        app:boxStrokeColor="@color/green"
+        app:hintTextColor="@color/green"
+        style="@style/ThemeOverlay.Material3.TextInputEditText.OutlinedBox">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/etHeight"
+            android:hint="Height(in cm)"
+            android:inputType="numberDecimal"
+            android:textSize="16sp"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:id="@+id/llDisplayBMIResult"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tilHeight"
+        android:paddingTop="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Your BMI:"
+            android:paddingTop="10dp"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/tvBMI"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="25.21"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/tvOverUnderWeight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Overweight"
+            android:paddingTop="10dp"
+            android:textSize="22sp"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/tvDisplay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Oops! You need to take care of yourself and workout."
+            android:paddingTop="10dp"
+            android:textSize="20sp"
+            android:gravity="center"/>
+
+        <Button
+            android:id="@+id/btnBMI"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="10dp"
+            android:backgroundTint="@color/green"
+            android:text="CALCULATE"
+            android:textSize="16sp"/>
+
+    </LinearLayout>
+
 
 </RelativeLayout>
