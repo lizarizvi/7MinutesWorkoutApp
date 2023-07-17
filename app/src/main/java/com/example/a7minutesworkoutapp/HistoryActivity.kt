@@ -2,10 +2,25 @@ package com.example.a7minutesworkoutapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.a7minutesworkoutapp.databinding.ActivityExcerciseBinding
+import com.example.a7minutesworkoutapp.databinding.ActivityHistoryBinding
 
 class HistoryActivity : AppCompatActivity() {
+
+    private var binding: ActivityHistoryBinding? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_history)
+
+        binding = ActivityHistoryBinding.inflate(layoutInflater)
+        setContentView(binding?.root)
+        setSupportActionBar(binding?.toolbarHistory)
+        if(supportActionBar!=null){
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+            supportActionBar?.title = "HISTORY"
+        }
+        binding?.toolbarHistory?.setNavigationOnClickListener {
+            onBackPressed()
+        }
     }
 }
