@@ -74,7 +74,7 @@
             android:id="@+id/tvBMI"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="25.21"
+            tools:text="25.21"
             android:textSize="30sp"
             android:textStyle="bold"
             android:gravity="center"/>
@@ -83,7 +83,7 @@
             android:id="@+id/tvOverUnderWeight"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Overweight"
+            tools:text="Overweight"
             android:paddingTop="10dp"
             android:textSize="22sp"
             android:gravity="center"/>
@@ -92,7 +92,7 @@
             android:id="@+id/tvDisplay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Oops! You need to take care of yourself and workout."
+            tools:text="Oops! You need to take care of yourself and workout."
             android:paddingTop="10dp"
             android:textSize="20sp"
             android:gravity="center"/>
