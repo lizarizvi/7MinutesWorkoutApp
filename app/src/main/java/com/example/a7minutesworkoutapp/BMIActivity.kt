@@ -13,6 +13,11 @@ class BMIActivity : AppCompatActivity() {
 
     private var binding: ActivityBmiBinding? = null
 
+    companion object{
+        private const val METRIC_UNITS_VIEW = "METRIC_UNITS_VIEW"
+        private const val US_UNITS_VIEW = "US_UNITS_VIEW"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //setContentView(R.layout.activity_bmi)
