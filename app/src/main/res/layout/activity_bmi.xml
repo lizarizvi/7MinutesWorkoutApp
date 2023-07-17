@@ -114,12 +114,20 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:id="@+id/view"
+        android:layout_below="@+id/rgUnits"
+        android:layout_centerHorizontal="true"/>
+
     <com.google.android.material.textfield.TextInputLayout
         android:layout_below="@+id/tilWeight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tilFeetUS"
         android:layout_margin="10dp"
+        android:layout_toStartOf="@+id/view"
         app:boxStrokeColor="@color/green"
         app:hintTextColor="@color/green"
         style="@style/ThemeOverlay.Material3.TextInputEditText.OutlinedBox"
@@ -143,6 +151,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/tilInchUS"
         android:layout_margin="10dp"
+        android:layout_toEndOf="@+id/view"
         app:boxStrokeColor="@color/green"
         app:hintTextColor="@color/green"
         style="@style/ThemeOverlay.Material3.TextInputEditText.OutlinedBox"

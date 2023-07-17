@@ -115,8 +115,8 @@ class BMIActivity : AppCompatActivity() {
 
     private fun  makeUSVisibleView(){
         currentVisibleView = US_UNITS_VIEW
-        binding?.tilWeight?.visibility = View.GONE
-        binding?.tilHeight?.visibility = View.GONE
+        binding?.tilWeight?.visibility = View.INVISIBLE
+        binding?.tilHeight?.visibility = View.INVISIBLE
         binding?.tilWeightUSUnits?.visibility = View.VISIBLE
         binding?.tilFeetUS?.visibility = View.VISIBLE
         binding?.tilInchUS?.visibility = View.VISIBLE
