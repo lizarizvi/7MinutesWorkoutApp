@@ -4,9 +4,11 @@
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
     android:padding="10dp"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:id="@+id/llHistory">
 
     <TextView
+        android:id="@+id/tvItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="1."
@@ -16,6 +18,7 @@
         />
 
     <TextView
+        android:id="@+id/tvPosition"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
