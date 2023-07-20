@@ -21,8 +21,8 @@ class HistoryAdapter(private val items: ArrayList<String>): RecyclerView.Adapter
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val date: String = items.get(position)
-        holder.tvPosition.text = (position+1).toString()
-        holder.tvItem.text = date
+        holder.tvItem.text = (position+1).toString()
+        holder.tvPosition.text = date
 
         if (position % 2 == 0){
             holder.llHistory.setBackgroundColor(ContextCompat.getColor(holder.itemView.context,R.color.lightGrey))
